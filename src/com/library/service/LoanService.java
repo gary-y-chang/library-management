@@ -10,6 +10,8 @@ import com.library.exception.OverdueBlockException;
 import com.library.model.Book;
 import com.library.model.Loan;
 import com.library.model.Member;
+import com.library.model.MemberRankingRow;
+import com.library.model.OverdueReportRow;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +19,8 @@ import java.util.List;
 
 /**
  * 借閱業務邏輯（F3 借書、F4 還書）與報表（F6）。
- * <p>本層是業務規則的落腳處：三道借書檢查、到期日計算、
+ * <p>
+ * 本層是業務規則的落腳處：三道借書檢查、到期日計算、
  * 逾期罰金結算全部集中在此。
  */
 public class LoanService {
@@ -35,9 +38,9 @@ public class LoanService {
     /**
      * 借書（F3）。依序通過三道檢查後才寫入借閱紀錄並扣減份數。
      *
-     * @throws BookNotAvailableException     已無可借份數
-     * @throws BorrowLimitExceededException  達同時借書上限
-     * @throws OverdueBlockException         有逾期未還書籍
+     * @throws BookNotAvailableException    已無可借份數
+     * @throws BorrowLimitExceededException 達同時借書上限
+     * @throws OverdueBlockException        有逾期未還書籍
      */
     public Loan borrow(long bookId, long memberId) {
         Book book = bookDao.findById(bookId)
@@ -105,4 +108,13 @@ public class LoanService {
         return loanDao.findAllActive();
     }
 
+    /** 逾期借閱清單（F6），按逾期天數排序。 */
+    public List<OverdueReportRow> overdueReport() {
+        return loanDao.overdueReport();
+    }
+
+    /** 會員借閱排行（F6），預設前 10 名。 */
+    public List<MemberRankingRow> memberRanking() {
+        return loanDao.memberRanking(10);
+    }
 }
