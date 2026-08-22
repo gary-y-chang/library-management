@@ -31,7 +31,7 @@ public class DBUtil {
                 "jdbc:mysql://localhost:3306/library_db"
                         + "?useSSL=false&serverTimezone=Asia/Taipei"
                         + "&characterEncoding=utf8&allowPublicKeyRetrieval=true");
-        user = props.getProperty("db.user", "root");
+        user = props.getProperty("db.user", "username");
         password = props.getProperty("db.password", "");
     }
 
