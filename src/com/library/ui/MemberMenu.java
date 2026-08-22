@@ -10,8 +10,7 @@ public class MemberMenu {
 
     private final MemberService memberService;
 
-    public MemberMenu() {
-        MemberDAO memberDao = new MemberDAO();
+    public MemberMenu(MemberDAO memberDao) {
         this.memberService = new MemberService(memberDao);
     }
 
