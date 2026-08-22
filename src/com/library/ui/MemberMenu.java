@@ -22,7 +22,7 @@ public class MemberMenu {
 
                     ──── 會員管理 ────
                      1. 新增會員
-                     2. 依編號查詢
+                     2. 依會員編號查詢
                      3. 會員列表
                      9. 回上層""");
             switch (InputHandler.input("請選擇")) {

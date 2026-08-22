@@ -1,5 +1,7 @@
 package com.library.ui;
 
+import java.util.List;
+
 import com.library.dao.BookDAO;
 import com.library.exception.LibraryException;
 import com.library.model.Book;
@@ -29,7 +31,7 @@ public class BookMenu {
                 case "1" -> addBook();
                 case "2" -> findBookByIsbn();
                 case "3" -> listBooks();
-                case "4" -> searchBooks();
+                case "4" -> System.out.println("To Do ....");
                 case "9" -> {
                     return;
                 }
@@ -51,5 +53,26 @@ public class BookMenu {
         } catch (LibraryException | IllegalArgumentException e) {
             System.out.println("✘ " + e.getMessage());
         }
+    }
+
+    private void findBookByIsbn() {
+        String isbn = InputHandler.input("ISBN");
+        bookService.findByIsbn(isbn).ifPresentOrElse(
+                b -> System.out.println("  " + b),
+                () -> System.out.println("查無此書"));
+    }
+
+    private void listBooks() {
+        printBookList(bookService.listAll());
+    }
+
+    
+    private void printBookList(List<Book> books) {
+        if (books.isEmpty()) {
+            System.out.println("（無資料）");
+            return;
+        }
+        System.out.println("共 " + books.size() + " 筆：");
+        books.forEach(b -> System.out.println("  " + b));
     }
 }
